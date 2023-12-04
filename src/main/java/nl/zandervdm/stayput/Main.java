@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class Main extends JavaPlugin {
@@ -84,7 +86,11 @@ public class Main extends JavaPlugin {
     public void setupConfig() {
         this.saveDefaultConfig();
         config = getConfig();
+
         this.debug = this.getConfig().getBoolean("debug");
+        config.addDefault("mod.worlds_with_rtp", new ArrayList<>(Arrays.asList("example-world", "another-example-world")));
+        config.addDefault("mod.max-x_z", new ArrayList<>(Arrays.asList(50, 300)));
+        saveConfig();
         debugLogger("Debug mode enabled");
     }
 
@@ -93,6 +99,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerTeleportEventListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitEventListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathEventListener(this), this);
+
         // Check if the MVPortals is loaded and then add an event handler for it
         Plugin plugin = getServer().getPluginManager().getPlugin("Multiverse-Portals");
 
@@ -131,6 +138,7 @@ public class Main extends JavaPlugin {
         if (this.debug) {
             getLogger().info(message);
         }
+
     }
 
 }

@@ -50,25 +50,40 @@ public class RuleManager {
 
         return true;
     }
-
     public PlayerLocation shouldTeleportPlayer(Player player, Location from, Location toLocation) {
+        boolean pl = shouldTeleportPlayerNoLocationExistsCheck(player, from, toLocation);
+        if (pl) {
+            // In any other case, find the previous spot of the user in this world
+            PlayerLocation previousLocation = this.plugin.getDatabase().getLocation(player, toLocation.getWorld());
+
+            // If there is no previous location for this world, just ignore it
+            if (previousLocation == null) {
+                this.plugin.debugLogger("Not teleporting player because there is no previous location found");
+                return null;
+            }
+
+            return previousLocation;
+        }
+        return null;
+    }
+    public boolean shouldTeleportPlayerNoLocationExistsCheck(Player player, Location from, Location toLocation) {
         World toWorld = toLocation.getWorld();
 
         if (toWorld == null || from.getWorld() == null) {
             this.plugin.debugLogger("shouldTeleporPlayer was given locations with null world values???");
-            return null;
+            return false;
         }
 
         // If this world is inside the configs blacklist, ignore
         if (this.worldIsBlacklisted(toWorld)) {
             this.plugin.debugLogger("Not redirecting teleport because this world is blacklisted");
-            return null;
+            return false;
         }
 
         // If we didn't change worlds, ignore the teleport
         if (from.getWorld().equals(toLocation.getWorld())) {
             this.plugin.debugLogger("Not redirecting teleport because player did not jump worlds");
-            return null;
+            return false;
         }
 
         // If we are teleporting to a defined location in a world, then it is a directed teleport, and we shouldn't touch it
@@ -91,27 +106,19 @@ public class RuleManager {
         } else {
             this.plugin.debugLogger("Not redirecting teleport because the destination appears to be specific location in the world. (If this was supposed to be redirected, there may be some confusion about the spawn location between the vanilla server and plugins.)");
             this.plugin.debugLogger(toLocation + " != " + spawn);
-            return null;
+            return false;
         }
 
         // If this is a teleport inside a world group, ignore it
         if (Objects.equals(plugin.getConfigManager().getWorldGroup(from.getWorld()), plugin.getConfigManager().getWorldGroup(toLocation.getWorld()))) {
             this.plugin.debugLogger("Teleport within world group, not redirecting");
-            return null;
+            return false;
         }
 
 
-        // In any other case, find the previous spot of the user in this world
-        PlayerLocation previousLocation = this.plugin.getDatabase().getLocation(player, toWorld);
-
-        // If there is no previous location for this world, just ignore it
-        if (previousLocation == null) {
-            this.plugin.debugLogger("Not teleporting player because there is no previous location found");
-            return null;
-        }
-
-        return previousLocation;
+        return true;
     }
+
 
     public boolean worldIsBlacklisted(World world) {
         return blacklistedWorlds.contains(world.getName());

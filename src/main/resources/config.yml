@@ -17,5 +17,16 @@ database:
 #  - world
 #  - world_nether
 
+mod:
+    worlds_with_rtp:
+        - world
+    min_range: 50
+    max_range: 500
+    messages:
+        you_have_been_randomly_teleported: §3Вы были телепортированы в случайное место,
+            так как у вас отсутсвует §5/home home.§3 Чтобы в будущем телепортироваться домой
+            пропишите §5/sethome home,§3 когда будете дома
+        please_wait: §3Пожалуйста, ожидайте пока мы найдем вам место для спавна... (переподключитесь, если вы долго ожидаете)
 # Want to debug and see why certain actions are (not) executed? Set this to true. Default: false
+
 debug: false
