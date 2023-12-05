@@ -43,7 +43,6 @@ public class Teleport {
             this.plugin.debugLogger(player.getName() + ": " + Objects.requireNonNull(from.getWorld()).getName() + " --> " + Objects.requireNonNull(to.getWorld()).getName());
 //            PlayerLocation previousLocation = this.plugin.getRuleManager().shouldTeleportPlayer(player, from, to);
             PlayerLocation previousPlayerLocation = this.plugin.getRuleManager().shouldTeleportPlayer(player, from, to);
-            System.out.println(previousPlayerLocation);
             if (previousPlayerLocation != null) {
                 Location previousLocation = previousPlayerLocation.getLocation();
                 if (this.isPressurePlate(previousLocation)) {
