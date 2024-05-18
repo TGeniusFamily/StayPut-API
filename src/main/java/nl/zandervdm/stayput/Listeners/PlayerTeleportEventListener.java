@@ -52,6 +52,7 @@ public class PlayerTeleportEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerTeleportEvent(PlayerTeleportEvent event) throws InterruptedException, ExecutionException {
+        if (true) return;
         PlayerTeleportEvent.TeleportCause cause = event.getCause();
         if (cause.equals(PlayerTeleportEvent.TeleportCause.COMMAND) ||
                 cause.equals(PlayerTeleportEvent.TeleportCause.PLUGIN))

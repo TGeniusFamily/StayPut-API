@@ -2,10 +2,7 @@ package nl.zandervdm.stayput;
 
 import nl.zandervdm.stayput.Commands.StayputCommand;
 import nl.zandervdm.stayput.Database.BaseDatabase;
-import nl.zandervdm.stayput.Listeners.MVPortalsListener;
-import nl.zandervdm.stayput.Listeners.PlayerDeathEventListener;
-import nl.zandervdm.stayput.Listeners.PlayerQuitEventListener;
-import nl.zandervdm.stayput.Listeners.PlayerTeleportEventListener;
+import nl.zandervdm.stayput.Listeners.*;
 import nl.zandervdm.stayput.Utils.ConfigManager;
 import nl.zandervdm.stayput.Utils.MVManager;
 import nl.zandervdm.stayput.Utils.RuleManager;

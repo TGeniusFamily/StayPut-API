@@ -17,4 +17,5 @@ public class PlayerDeathEventListener implements Listener {
         this.plugin.getDatabase().deleteLocation(event.getEntity(), event.getEntity().getWorld());
     }
 
+
 }
